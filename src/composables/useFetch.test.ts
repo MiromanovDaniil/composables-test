@@ -60,7 +60,6 @@ describe('useFetch', () => {
     expect(isLoading.value).toBe(false);
     expect(isSuccess.value).toBe(true);
     expect(isError.value).toBe(false);
-    // JSONPlaceholder returns 201 for a successful post.
     expect(status.value).toBe(201);
     expect(data.value).toHaveProperty('id');
     expect(data.value).toMatchObject({
@@ -84,12 +83,11 @@ describe('useFetch', () => {
     await execute({ url: 'https://example.com/html', method: 'GET' });
 
     expect(isLoading.value).toBe(false);
-    expect(isSuccess.value).toBe(false); // ✅ Correct expectation
+    expect(isSuccess.value).toBe(false);
     expect(isError.value).toBe(true);
     expect(data.value).toBeNull();
-    expect(errorMessage.value).toContain('Invalid JSON response'); // ✅ Updated expected message
+    expect(errorMessage.value).toContain('Invalid JSON response'); 
 
-    // Restore the original fetch.
     vi.restoreAllMocks();
   });
 
@@ -112,13 +110,11 @@ describe('useFetch', () => {
       method: 'GET',
     });
 
-    // Immediately after execute() is called, isLoading should be true.
     expect(isLoading.value).toBe(true);
 
     await executePromise;
     expect(isLoading.value).toBe(false);
 
-    // Restore the original fetch.
     globalThis.fetch = originalFetch;
   });
 });
