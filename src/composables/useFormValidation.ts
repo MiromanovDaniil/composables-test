@@ -10,9 +10,6 @@ export function useFormValidation(formData: FormData) {
   });
 
   const validateField = (fieldName: string) => {
-    if (!fieldsValidity[fieldName]) {
-      fieldsValidity[fieldName] = { isValid: true, errorMessage: '' };
-    }
     const field = formData[fieldName];
     
     if (!field.rules || !Array.isArray(field.rules)) {
@@ -38,19 +35,12 @@ export function useFormValidation(formData: FormData) {
     Object.keys(formData).forEach(fieldName => validateField(fieldName));
   };
 
-  const resetValidation = () => {
-    submitted.value = false;
-    Object.keys(fieldsValidity).forEach(field => {
-      fieldsValidity[field].isValid = true;
-      fieldsValidity[field].errorMessage = '';
-    });
-  };
-
   const isFormValid = computed(() => {
     return Object.values(fieldsValidity).every(field => field.isValid);
   });
 
   watch(formData, () => {
+
     Object.keys(formData).forEach(validateField);
   }, { deep: true });
 
@@ -60,6 +50,5 @@ export function useFormValidation(formData: FormData) {
     submitted,
     validateField,
     validateForm,
-    resetValidation,
   };
 }

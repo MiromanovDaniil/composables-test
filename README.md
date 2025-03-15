@@ -27,6 +27,11 @@ This project is a Vue 3 application using TypeScript and Vite. It demonstrates t
    ```
 4. Open your browser and navigate to `http://localhost:3000` to view the application.
 
+### Run Tests
+``` sh
+npm run test
+``` 
+
 ## Project Details
 
 ### Components
@@ -50,6 +55,7 @@ This project is a Vue 3 application using TypeScript and Vite. It demonstrates t
 - **tsconfig.json**: TypeScript configuration for the overall project.
 - **tsconfig.app.json**: TypeScript configuration specifically for the application.
 - **tsconfig.node.json**: TypeScript configuration for Node.js environment.
+
 
 ## License
 

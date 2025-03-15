@@ -20,80 +20,77 @@ const formData = reactive<FormData>({
   }
 });
 
-const { fieldsValidity, isFormValid, submitted, validateForm, resetValidation } = useFormValidation(formData);
+const { fieldsValidity, isFormValid, submitted} = useFormValidation(formData);
 
 const submitForm = () => {
-  validateForm();
+
+  submitted.value = true;
+
   if (isFormValid.value) {
     console.log('Form submitted successfully', {
       email: formData.email.value,
       password: formData.password.value
     });
-    // Reset form
+
     formData.email.value = '';
     formData.password.value = '';
-    resetValidation();
+    submitted.value = false;
   }
 };
 </script>
 
+
 <template>
-    <form @submit.prevent="submitForm" class="form">
-      <h2>Регистрация</h2>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input
-          id="email"
-          v-model="formData.email.value"
-          type="email"
-          placeholder="Введите email"
-          class="form-input"
-          aria-describedby="email-error"
-        />
-        <p 
-          v-if="submitted.value && !fieldsValidity.email.isValid" 
-          id="email-error"
-          class="error"
-          aria-live="polite"
-        >
-          {{ fieldsValidity.email.errorMessage }}
-        </p>
-      </div>
-      <div class="form-group">
-        <label for="password">Пароль</label>
-        <input
-          id="password"
-          v-model="formData.password.value"
-          type="password"
-          placeholder="Введите пароль"
-          class="form-input"
-          aria-describedby="password-error"
-        />
-        <p 
-          v-if="submitted.value && !fieldsValidity.password.isValid"
-          id="password-error"
-          class="error"
-          aria-live="polite"
-        >
-          {{ fieldsValidity.password.errorMessage }}
-        </p>
-      </div>
-      <button 
-        type="submit" 
-        class="btn"
-        :disabled="submitted.value && !isFormValid"
-      >
-        Отправить
-      </button>
-      <p 
-        v-if="submitted.value && isFormValid" 
-        class="success"
+  <form @submit.prevent="submitForm" class="form">
+    <h2>Регистрация</h2>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        id="email"
+        v-model="formData.email.value"
+        type="email"
+        placeholder="Введите email"
+        class="form-input"
+        aria-describedby="email-error"
+      />
+      <p
+        v-if="submitted.value && !fieldsValidity.email.isValid"
+        id="email-error"
+        class="error"
         aria-live="polite"
       >
-        Форма успешно отправлена!
+        {{ fieldsValidity.email.errorMessage }}
       </p>
-    </form>
+    </div>
+    <div class="form-group">
+      <label for="password">Пароль</label>
+      <input
+        id="password"
+        v-model="formData.password.value"
+        type="password"
+        placeholder="Введите пароль"
+        class="form-input"
+        aria-describedby="password-error"
+      />
+      <p
+        v-if="submitted.value && !fieldsValidity.password.isValid"
+        id="password-error"
+        class="error"
+        aria-live="polite"
+      >
+        {{ fieldsValidity.password.errorMessage }}
+      </p>
+    </div>
+    <button
+      type="submit"
+      class="btn"
+      :disabled="submitted.value && !isFormValid"
+    >
+      Отправить
+    </button>
+  </form>
 </template>
+
 
 <style scoped>
 .form {

@@ -112,6 +112,7 @@ describe('useFormValidation', () => {
 
     // Update the value to be valid
     formData.username.value = 'john';
+    
     validateField('username');
     expect(isFormValid.value).toBe(true);
     expect(fieldsValidity.username.isValid).toBe(true);
